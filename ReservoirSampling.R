@@ -35,8 +35,8 @@ qqnorm(sample_from)
 hist(sample_to)
 qqnorm(sample_to)
 par(mfrow = c(1,1))
-#the resulting sample is normal. You might notice that the Q-Q plot
-#looks less normal, but remember that the bottom row has 1/100 of the
+#the resulting sample  normal. You might notice that the Q-Q plot
+#looks less normal, bisut remember that the bottom row has 1/100 of the
 #data of the top row.
 
 #Let's wrap this into a function
