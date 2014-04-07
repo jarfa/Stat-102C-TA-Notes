@@ -1,7 +1,7 @@
 #Reservoir Sampling
 #http://en.wikipedia.org/wiki/Reservoir_sampling
-#Problem: we want a way to sample from a vector of unknown lenght.
-#imagine that data points are coming at you one at a time, and you
+#Problem: we want a way to sample from a vector of unknown length.
+#Imagine that data points are coming at you one at a time, and you
 #want to sample from the data in a random, representative way. How
 #would you do that?
 
@@ -14,7 +14,7 @@ sample_to = rep(NA, k)
 #Yes, there are MUCH faster ways than a for loop. 
 #But reservoir sampling is based on the idea that we don't know how big 
 #our data is yet. Let's pretend that it's coming in one line at a time.
-#first k samples: fill our reservoir
+#first k samples: fill our reservoir (hence the name).
 for(i in 1:k)
   sample_to[i] = sample_from[i]
 #next (N-k) samples: replace values in our reservoir with

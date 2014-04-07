@@ -1,6 +1,9 @@
 #Let's assume you already know a bit about R. This exercise should serve 
 #as a review, and teach you about vectorizing your code.
 
+#Since our discussion section I added some ggplot figures, just in case you
+#want to see the code we wrote in class.
+
 #Problem: we want to estimate the value of PI. 
 #One way to do this is to estimate the ratio of the area of a square to
 #the area of a circle inscribed in that square. Note that if we have a 
@@ -66,7 +69,7 @@ set.seed(15)
 Estimates = numeric(length(N))
 for(i in 1:length(N))
   Estimates[i] = PIsim(N[i])
-#Estimates = sapply(N, PIsim) #a vectorized way to do the above for loop
+#  Estimates = sapply(N, PIsim) #a vectorized way to do the above for loop
 #This might be too advanced for the first lecture, but it would be good
 #to learn how to use the apply family of functions and/or the plyr library.
 plot(log10(N), Estimates, type = 'l')
