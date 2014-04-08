@@ -9,6 +9,9 @@ PI simulation.R: This is part of an assignment we had for Stat 202A, the grad-le
 ReservoirSampling.R: this is an interesting problem (that is not directly applicable to this course, but is good to practice you R skills): how do we sample from a vector of unknown length? The R code is pretty basic, but if you can understand what the code does you will be ready for this course.
 
 **2nd Week**
-Rejection Sampling & Inverse CDF Sampling. These are both ways to use random samples from a very simple distribution (like uniform) to get samples from more complex (but usually univariate) distributions.
+
+Rejection Sampling & Inverse CDF Sampling, yay!. These are both ways to use random samples from a very simple distribution (like uniform) to get samples from more complex (but usually univariate) distributions. 
+
+Sampling from complex multivariate distributions is what MCMC algorithms are for - so hold your horses.
 
 
