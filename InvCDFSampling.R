@@ -26,10 +26,15 @@ curve(dnorm(x), col = 'red', add = T)
 
 ## Genrate samples of a discrete dist
 ## Uniform to Poisson (when lambda is large)
-Nsim = 10^4; lambda = 100
+#This is the version of Inverse CDF Sampling for a discrete distr.
+Nsim = 10^4; 
+lambda = 100
 spread = 3*sqrt(lambda) # variance = lambda
-t = round(seq(max(0,lambda-spread),lambda+spread,1))
+t = round(seq(max(0,lambda-spread),
+              lambda+spread,1))
 prob = ppois(t, lambda)
+par(mfrow = c(1,1))
+plot(t, prob, pch=16, cex=0.5)
 X = rep(0,Nsim)
 for (i in 1:Nsim){
   u = runif(1)
