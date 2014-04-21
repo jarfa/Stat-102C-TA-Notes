@@ -14,4 +14,14 @@ Rejection Sampling & Inverse CDF Sampling, yay!. These are both ways to use rand
 
 Sampling from complex multivariate distributions is what MCMC algorithms are for - so hold your horses.
 
+**3rd Week**
+
+Homework #1 hints. The solution will be posted once Prof. Wu is sure that nobody else will be turning it in.
+
+**4th Week**
+
+Monte Carlo integration, get psyched! A bit of classic MC integration & importance sampling.
+
+
+
 
