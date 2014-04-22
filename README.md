@@ -22,6 +22,6 @@ Homework #1 hints. The solution will be posted once Prof. Wu is sure that nobody
 
 Monte Carlo integration, get psyched! A bit of classic MC integration & importance sampling.
 
-
+Prof. Wu is letting you all re-do parts of HW1 for credit. So we'll give you even more hints.
 
 
