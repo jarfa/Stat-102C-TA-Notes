@@ -24,4 +24,6 @@ Monte Carlo integration, get psyched! A bit of classic MC integration & importan
 
 Prof. Wu is letting you all re-do parts of HW1 for credit. So we'll give you even more hints.
 
+**5th Week**
 
+Went over HW2. Check the repository for Pseudo-code for Prob 3.2
