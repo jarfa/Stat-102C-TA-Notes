@@ -5,7 +5,7 @@
 #Why did I choose this distribtuion? Because it looks vaguely normal.
 par(mfrow = c(1,1))
 curve(dgamma(x, 2, 0.5),0, 20, lwd=2)
-#Let's say that C>=3, just like in the HW example C>=0
+#Let's say that C>=3, just like in the HW example C>0
 abline(v=3, col='blue')
 
 #Instead of exp(lambda), we're using Gamma(1, beta)
@@ -19,6 +19,8 @@ for(i in 1:4){
         main = 'Gamma Densities')
 }
 legend('topright', paste0('a,b = 1,',betavals), lty=1, col=1:4)
+
+
 
 #PDF of truncated Gamma(a=2,b=0.5)
 f = function(x, C){ 
@@ -56,7 +58,7 @@ abline(h=M_min, col='blue', lty=2,lwd=2)
 #OK! Let's wrap everything we need to do into a function.
 #We'll give it the number of samples we need, the function 
 #to optimize, and C.
-gen_truncGam = function(nsamples, Mfunct, C){
+gen_truncGam = function(nsamples, C){
   #finds lambda and M
   optimum = optimize(f = function(B) M_funct(B, C), 
                      interval = c(0.1, 5), maximum=FALSE)
@@ -88,7 +90,7 @@ Cvals = c(3.1, 3.5, 5, 8)
 par(mfrow = c(2,2))
 for(Cstar in Cvals){
 #Note: uncomment the 2 commented lines below to see how our samples fit the target distribution
-  truncGam = gen_truncGam(N, M_funct, C = Cstar)
+  truncGam = gen_truncGam(N, C = Cstar)
   hist(truncGam$x, xlim = c(0, max(truncGam$x)), 
 #        freq=FALSE,
        xlab = paste0('Truncated Gamma(2,0.5) @ C = ', Cstar), 
