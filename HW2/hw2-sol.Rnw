@@ -1,0 +1,213 @@
+%Note: set our Rstudio settings to compile as Sweave.
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\pagestyle{plain}
+
+%% Shortcuts
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\F}{\mathcal{F}}
+\renewcommand{\S}{\mathcal{S}}
+
+\newcommand{\E}{\mathrm{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\diff}{\mathrm{d}}
+
+\title{Stat 102C HW2: Answer Key}
+\author{Muzhou Liang}
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+\section*{Problem 1}
+\begin{enumerate}
+\item[(1)]
+\begin{align*}
+\E(\hat{I}) = \frac{1}{n} \sum_{i=1}^n \E[h(X_i)] = \frac{1}{n} n \E[h(X)] = \E[h(X)] = I
+\end{align*}
+
+\item[(2)]
+\begin{align*}
+\Cov[h(X_i),h(X_j)] & = \E[h(X_i)h(X_j)] - \E[h(X_i)]\E[h(X_j)] \\
+                    & = \int\int h(X_i)h(X_j)f(x_i)f(x_j)\diff x_i \diff x_j - I^2 \\
+                    & = \int h(x_i)f(x_i) \diff x_i \int h(x_j)f(x_j) \diff x_j - I^2 \\
+                    & = \E[h(X_i))\E(h(X_j)] - I^2 = 0
+\end{align*}
+\begin{align*}
+\Var(\hat{I}) & = \frac{1}{n^2}\Var\big[\sum_{i=1}^nh(X_i)\big] \\
+              & = \frac{1}{n^2}\left[\sum_{i=1}^n\Var[h(X_i)] + \sum_{i\neq j}\Cov[h(X_i),h(X_j)] \right] \\
+              & = \frac{1}{n^2}n\Var[h(X)] = \frac{1}{n}\Var[h(X)]
+\end{align*}
+
+Let $V = \Var[h(X)]$, $\hat{V} = \frac{1}{n^2}\sum_{i=1}^n[h(X_i)-\hat{I}]^2$ would be the estimator.
+
+\item[(3)] $\hat{I}$ follows $\mathcal{N}(I, V)$ when sample size is large, according to the Central Limit Theorem (CLT). Hence, the 95\% confidence interval is given as $[\hat{I}-z_{.025}\sqrt{\hat{V}}, \hat{I}+z_{.025}\sqrt{\hat{V}}]$, where $z_{.025}=1.96$.
+
+\item[(4)]
+<<results=verbatim>>=
+h = function(x) x^4
+E = function(n) {
+  x = rnorm(n)
+  I = mean(h(x))
+  return(I)
+}
+E(1e5)
+@ 
+
+\end{enumerate}
+
+\section*{Problem 2}
+\begin{enumerate}
+\item[(1)] 
+\begin{align*}
+\E_g[h(X)W(X)] & = \int h(x)w(x)g(x) \diff x \\
+               & = \int h(x)\frac{f(x)}{g(x)}g(x) \diff x \\
+               & = \int h(x)f(x) \diff x = \E_f[g(X)]
+\end{align*}
+
+\item[(2)]
+\begin{align*}
+\E(\hat{I}) = \frac{1}{n}\sum_{i=1}^n \E[h(X_i)w_i] = \E_g[h(X)W(X)] = I
+\end{align*}
+Same as 1.2, $\Cov[h(X_i)w_i, h(X_j)w_j] = 0$.
+\begin{align*}
+\Var(\hat{I}) & = \frac{1}{n^2} \left[ \sum_{i=1}^n\Var[h(X_i)w_i] + \sum_{i\neq j}\Cov[h(X_i)w_i, h(X_j)w_j] \right] \\
+              & = \frac{1}{n} \Var_g[h(X_i)w_i]
+\end{align*}
+
+\item[(3)] $f$ is a truncated Normal density with $C=0$; $g$ is an Exponential density with $\lambda=2$.
+<<results=verbatim>>=
+f = function(x) sqrt(2/pi) * exp(-x^2/2)
+g = function(x) dexp(x, 2)
+E = function(n) {
+  x = rexp(n, 2)
+  w = f(x)/g(x)
+  I = mean(x * w)
+  return(I)
+}
+E(1e5)
+@ 
+
+\end{enumerate}
+
+\section*{Problem 3}
+\begin{enumerate}
+\item[(1)] We take $g$ as the density of $\mathcal{N}(C, 1)$, $h(x) = \mathbf{1}_{\{X > C\}}$.
+<<results=verbatim>>=
+f = function(x) dnorm(x)
+g = function(x, C) dnorm(x, mean = C)
+h = function(x, C) (x > C) # this function returns a vector 
+# consists of TRUEs and FALSEs, which equal to 1 and 0 when
+# taken into computing
+E = function(n, C) {
+  x = rnorm(n, C)
+  w = f(x) / g(x, C)
+  I = mean(h(x, C) * w)
+  return(I)
+}
+E(1e5, 2); 1-pnorm(2) #true value
+@ 
+
+A more efficient alternative:
+We take $g$ as the density of the exponential distribution $Exp(1)$ truncated at C, $h(x) = \mathbf{1}_{\{X > C\}}$ still. But note that h(x) will always equal to 1 since the generated sample is always bigger than $C$. Therefore, we can just ignore $h(x)$ here. 
+\[
+g(y) = e^{-y}/\int_C^{\infty}e^{-x} \diff x = e^{-(y-C)}
+\]
+\[
+\hat{I} = \frac{1}{n}\sum_{i=1}^n \frac{f(X_i)}{g(X_i)} 
+\]
+<<results=verbatim>>=
+f = function(x) dnorm(x)
+g = function(x, C) dexp(x-C)
+E = function(n, C) {
+  x = rexp(n) + C
+  w = f(x)/g(x, C)
+  I = mean(w)
+  return(I)
+}
+E(1e5, 2); 1-pnorm(2) #true value
+@ 
+
+\item[(2)] We can generate $(X_1, X_2, X_3)$ from $\mathcal{N}(\alpha, 1)$, where $\alpha$ is a positive number slightly smaller to $C$. Thus, $P(M > C)$ would be much larger. So $g$ would be the joint density of three normal distributions $\mathcal{N}(\alpha, 1)$, and $f$ is the joint density of three $\mathcal{N}(\mu, 1)$. $h(X) = \mathbf{1}_{\{M > C\}}$. 
+<<results=verbatim>>=
+f = function(x1, x2, x3, mu) {
+  dnorm(x1, mu, 1) * dnorm(x2, mu, 1) * dnorm(x3, mu, 1)
+}
+g = function(x1, x2, x3, alpha) {
+  dnorm(x1, alpha, 1) * dnorm(x2, alpha, 1) * dnorm(x3, alpha, 1)
+}
+h = function(M, C) (M > C)
+E = function(N, mu, alpha, C) {
+  X = cbind(
+    x1 = rnorm(N, alpha, 1),
+    x2 = rnorm(N, alpha, 1),
+    x3 = rnorm(N, alpha, 1)
+  )
+  M = apply(X, 1, FUN = function(x) {max(x[1], x[1]+x[2], 
+            x[1]+x[2]+x[3])})
+  w = apply(X, 1, FUN = function(x) {f(x[1], x[2], x[3], mu) / 
+            g(x[1], x[2], x[3], alpha)})
+  I = mean(w * h(M, C))
+  return(I)
+}
+E(1e5, -1, 0.5, 1)
+@ 
+
+\end{enumerate}
+
+\section*{Problem 4}
+\begin{enumerate}
+\item[(1)] \[
+f_{R,\Theta}(r, \theta) = f_{X,Y}(r\cos\theta, r\sin\theta)|
+  \begin{vmatrix}
+  \frac{\partial r\cos\theta}{\partial r} & \frac{\partial r\cos\theta}{\partial \theta} \\
+  \frac{\partial r\sin\theta}{\partial r} & \frac{\partial r\sin\theta}{\partial \theta}
+  \end{vmatrix}
+  | = \frac{r}{2\pi}e^{-r^2/2}
+\]
+
+\item[(2)] \[
+f_{R,\Theta}(r, \theta) = \frac{1}{2\pi} \diff \theta re^{-r^2/2} \diff r
+\]
+Since $R$ and $\Theta$ are independent, we can get the two densities as below 
+\[
+g_R(r) = re^{-r^2/2} \diff r = e^{-r^2/2} \diff \frac{r^2}{2} = e^{-t}\diff t \;\; \text{(let }T = \frac{R^2}{2})
+\]
+\[
+h_\Theta(\theta) = \frac{1}{2\pi} \diff \theta 
+\]
+Thus $T$ follows $\mathcal{E}xp(1)$. Remember that an Exponential sample can be obtained by a uniform generator using inverse sampling method. Hence
+\begin{gather*}
+T = - \log U \\
+R = \sqrt{2T} \\
+\Theta = 2\pi V
+\end{gather*}
+<<fig=TRUE, height=4>>=
+normsamp = function(n) {
+  u = runif(n)
+  v = runif(n)
+  t = -log(u)
+  r = sqrt(2*t)
+  theta = 2*pi*v
+  x = r*cos(theta)
+  y = r*sin(theta)
+  res = list("X"=x, "Y"=y)
+  return(res)
+}
+par(mfrow=c(1,2))
+sample = normsamp(1e4)
+hist(sample$X, freq=FALSE)
+curve(dnorm(x), col = 'red', lwd=2,add = T)
+hist(sample$Y, freq=FALSE)
+curve(dnorm(x), col = 'red', lwd=2,add = T)
+@ 
+
+\end{enumerate}
+
+\end{document}
