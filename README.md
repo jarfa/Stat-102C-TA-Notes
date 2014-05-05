@@ -2,6 +2,8 @@ This repository contains files for my Stat 102C sections.
 
 Many of our discussion sections will involve me going over R code that’s relevant to what you’ve been learning that week. I’ll (hopefully) be uploading the code here by Tuesday night before our section.
 
+Note on the .Rnw files: if you're going to compile them into PDF's yourself, check your Rstudio preferences to see if it's going to use Sweave or Knitr. Make sure you're using the right one.
+
 **1st Week**
 
 PI simulation.R: This is part of an assignment we had for Stat 202A, the grad-level intro R class. Along with reviewing key R concepts, this should demonstrate how (and why) we vectorize our code.
