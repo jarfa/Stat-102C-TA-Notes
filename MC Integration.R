@@ -9,7 +9,7 @@ par(mfrow = c(2,1))
 hist(x, breaks=40)
 hist(H, breaks=40)
 #think of this next line like a mean of all the samples up to each iteration
-estint_regular = cumsum(H)/(1:Nsim) 
+estint_regular = cumsum(H)/(1:Nsim) #rolling mean
 mean(H)
 esterr = sqrt(cumsum((x-estint_regular)^2))/(1:Nsim)
 par(mfrow = c(1,1))

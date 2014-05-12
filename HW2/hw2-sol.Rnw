@@ -1,4 +1,3 @@
-%Note: set our Rstudio settings to compile as Sweave.
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -45,9 +44,9 @@
               & = \frac{1}{n^2}n\Var[h(X)] = \frac{1}{n}\Var[h(X)]
 \end{align*}
 
-Let $V = \Var[h(X)]$, $\hat{V} = \frac{1}{n^2}\sum_{i=1}^n[h(X_i)-\hat{I}]^2$ would be the estimator.
+Let $V = \Var[h(X)]$, $\hat{V} = \frac{1}{n}\sum_{i=1}^n[h(X_i)-\hat{I}]^2$ would be the estimator.
 
-\item[(3)] $\hat{I}$ follows $\mathcal{N}(I, V)$ when sample size is large, according to the Central Limit Theorem (CLT). Hence, the 95\% confidence interval is given as $[\hat{I}-z_{.025}\sqrt{\hat{V}}, \hat{I}+z_{.025}\sqrt{\hat{V}}]$, where $z_{.025}=1.96$.
+\item[(3)] $\hat{I}$ follows $\mathcal{N}(I, V/n)$ when sample size is large, according to the Central Limit Theorem (CLT). Hence, the 95\% confidence interval is given as $[\hat{I}-z_{.025}\sqrt{\hat{V}/n}, \hat{I}+z_{.025}\sqrt{\hat{V}/n}]$, where $z_{.025}=1.96$.
 
 \item[(4)]
 <<results=verbatim>>=
