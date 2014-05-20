@@ -25,9 +25,10 @@ no_alloc = function(N){
   num
 }
 
-outlength=10
-timedata = data.frame(
+outlength=10 #number of values of N we're going to test for
+timedata = data.frame( #making a blank dataframe to put our data in
   N = seq(1e2, 5e4, length.out = outlength),
+  #you can change the end value of the sequence (5e4) if it's too slow 
   alloc = numeric(outlength),
   concat = numeric(outlength),
   no_alloc = numeric(outlength)
@@ -35,6 +36,7 @@ timedata = data.frame(
 
 for(i in 1:outlength){
   timedata$alloc[i] = system.time(alloc(timedata$N[i]))[3]
+  #why did I put a [3] there? What does the function system.time() return? Try it.
   timedata$concat[i] = system.time(concat(timedata$N[i]))[3]
   timedata$no_alloc[i] = system.time(no_alloc(timedata$N[i]))[3]
 }
@@ -47,7 +49,8 @@ ggplot(timedata1, aes(x=N, y=time, color = type)) + geom_line(size=2) +
   theme_minimal()
 
 ggplot(timedata1, aes(x=N, y=time, color = type)) + geom_line(size=2) + 
-  theme_minimal() + scale_y_sqrt()
+  theme_minimal() + scale_y_sqrt() 
+#a different scale lets us see what's happening for the fastest function
 
-#for extra credit: make plots demonstrating that pre-allocating a vector
-#of length N leads to an O(n) operation, while the other two are O(n^2)
+#for extra credit (actually no credit): make plots demonstrating that pre-allocating a 
+#vector of length N leads to an O(n) operation, while the other two are O(n^2)
