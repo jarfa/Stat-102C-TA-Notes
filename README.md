@@ -29,3 +29,7 @@ Prof. Wu is letting you all re-do parts of HW1 for credit. So we'll give you eve
 **5th Week**
 
 Went over HW2. Check the repository for Pseudo-code for Prob 3.2
+
+**8th Week**
+
+Week 8 already? HW3 solutions will be uploaded, and we're moving from MC into MCMC. Metropolis and Metropolis-Hastings will be introduced. I highly recommend watching [this youtube video to understand MH samplers](https://www.youtube.com/watch?v=h1NOS_wxgGg).
