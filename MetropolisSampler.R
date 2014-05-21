@@ -7,10 +7,10 @@
 #In this example we're trying to get samples from a N(0,1) using a N(0, 0.1). 
 #You can chang the proposal distribution if you like.
 geneq = function(x){ #this function gets numbers from our proposal distribution q
-  rnorm(1, mean=x, sd = 0.1) #try changing the sd for this distribution
+  rnorm(1, mean=x, sd = 0.5) #try changing the sd for this distribution
 }
 q = function(x, y){ #the pdf of q
-  dnorm(y, mean=x, sd=0.1)#try changing the sd for this distribution.
+  dnorm(y, mean=x, sd=0.5)#try changing the sd for this distribution.
 }
 f = function(x){ #the pdf of f - the target distribution
   dnorm(x, mean=0, sd = 1)
@@ -45,16 +45,16 @@ hist(rbeta(1e5, 1/4, 1/4), breaks=50, freq=FALSE,
      main = 'Histogram of Beta(1/4, 1/4)') #FYI. Note that it's bi-modal.
 
 geneq = function(x){#this function gets numbers from our proposal distribution q
-  rnorm(1, mean=x, sd=0.05)
+  rnorm(1, mean=x, sd=0.25)
 }
 q = function(x, y){#the pdf of q
-  dnorm(y, mean=x, sd=0.05)
+  dnorm(y, mean=x, sd=0.25)
 }
 f = function(x){#the pdf of f - the target distribution
   dbeta(x, .25, .25)
 }
-Nsim = 1e3
-x = rep(0.5, Nsim)
+Nsim = 1e4
+x = rep(0, Nsim)
 #start at 0.5 because if we start outside at 0 or 1 (or outside those bounds) it will never move - f(x) will always be 0
 for(t in 1:(Nsim-1)){
   y = geneq(x[t])

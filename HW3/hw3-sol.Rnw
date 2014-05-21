@@ -18,7 +18,7 @@
 \newcommand{\diff}{\mathrm{d}}
 
 \title{Stat 102C HW3: Answer Key}
-\author{Muzhou Liang}
+\author{Muzhou Liang, Jonathan Arfa}
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
@@ -90,21 +90,24 @@ ggplot(data.frame(N, walks), aes(x=N, y=walks)) + geom_point(size=3) +
 @
 
 \section*{Problem 2}
+\[
+p^{(t+1)}(y) = \sum_x p^{(t)}(x, y) = \sum_x p^{(t)}(x)p(y|x) = \sum_x p^{(t)}(x)K(x,y)
+\]
+
 <<results=verbatim, cache=TRUE>>=
 RW3 = function(t = 1e2, p = c(1, 0, 0), k11 = 0.5, k12 = 0.25, 
                k13 = 0.25, k21 = 0.25, k22 = 0.5, k23 = 0.25, 
                k31 = 0.25, k32 = 0.25, k33 = 0.5) {
   states = c(1, 2, 3)
   K = matrix(c(k11, k12, k13, k21, k22, k23, k31, k32, k33), 3, byrow=TRUE)
-  
   if(!(sum(K[1,]) == 1 & sum(K[2,]) == 1 & sum(K[3,]) == 1)) {
     print('Row sum is not 1!')
     break
   }
   for (i in 1:t) {
-    p1 = sum(p * K[,1])
-    p2 = sum(p * K[,2])
-    p3 = sum(p * K[,3])
+    p1 = sum(p * K[, 1])
+    p2 = sum(p * K[, 2])
+    p3 = sum(p * K[, 3])
     p = c(p1, p2, p3)
   }
   return(p)

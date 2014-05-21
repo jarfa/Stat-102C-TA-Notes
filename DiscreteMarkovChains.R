@@ -9,7 +9,7 @@ matrixpower = function(mat, pow){
   stopifnot(pow > 0) #pow must be positive
   stopifnot(pow %% 1 == 0) #pow must be an integer
   mat1 = mat
-  if(n>1){
+  if(pow>1){
     for(i in 2:pow)
       mat1 = mat1 %*% mat
   }
