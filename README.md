@@ -33,3 +33,6 @@ Went over HW2. Check the repository for Pseudo-code for Prob 3.2
 **8th Week**
 
 Week 8 already? HW3 solutions will be uploaded, and we're moving from MC into MCMC. Metropolis and Metropolis-Hastings will be introduced. I highly recommend watching [this youtube video to understand MH samplers](https://www.youtube.com/watch?v=h1NOS_wxgGg).
+
+**9th Week**
+We'll mostly talk about HW#4, and maybe get a tiny bit into Gibbs Sampling. Remember that you have yet another homework due in week 10.
