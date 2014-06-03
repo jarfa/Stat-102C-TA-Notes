@@ -13,9 +13,9 @@ options(tidy=TRUE, width=70)
 
 \section*{Problem 1.1}
 \begin{align}
-p^{(t+1)}(y) &=  \sum_x p^{(t)}(y | x) p^{(t)}(x)  \\
-p(x_{t+1} = y) &= \sum_x p(x_{t+1} = y \: \& \: x_t = x) \\
-&= \sum_x p(x_{t+1} = y | x_t = x) \: p(x_t = x) \\
+p^{(t+1)}(y) &=  \sum_x  p^{(t)}(x) K(x, y) \\
+p(X_{t+1} = y) &= \sum_x p(X_{t+1} = y \: \& \: X_t = x) \\
+&= \sum_x p(X_{t+1} = y | X_t = x) \: p(X_t = x) \\
 &= \sum_x K(x,y) \: p^{(t)}(x) \\
 \end{align}
 
@@ -30,21 +30,21 @@ p^{(t)} &= p^{(t-1)}K  \\
 Let's say that $s=2$ \\
 
 \begin{align}
-K^{(2)}(x,y) &= p(x_{t+2}=y | x_t=x)\\
-&= \sum_z p(x_{t+2}=y \: \& \: x_{t+1}=z | x_t=x) \\
-&= \sum_z p(x_{t+2}=y | x_{t+1}=z \: \& \: x_t=x) \: p(x_{t+1}=z | x_t=x) \\
-&= \sum_z K(x,z) K(z,y) = K*K \\
+K^{(2)}(x,y) &= p(X_{t+2}=y | X_t=x)\\
+&= \sum_z p(X_{t+2}=y \: \& \: X_{t+1}=z | X_t=x) \\
+&= \sum_z p(X_{t+2}=y | X_{t+1}=z \: \& \: X_t=x) \: p(X_{t+1}=z | X_t=x) \\
+&= \sum_z K(x,z) K(z,y) = [K*K](x, y) \\
 K^{(2)}(x,y) &= K^2(x,y)
 \end{align}
 
 \section*{Problem 1.4}
-In 1.1, suppose a population of 1 million people is moving around our list of cities. $p^{(t+1)}(y)$ can be interpreted as the number of people in city $y$ at time $t+1$, and $p^{(t)}(x)$ can be interpreted as the number of people in city $x$ at time $t$. $K(x, y)$ is the fraction
-can be interpreted as, among all the people in city $x$ at time $t$, the fraction of who will move to $y$ at time $t+1$. So $p^{(t)}(x) K(x, y)$ is the number of people who are at $x$ at time $t$ and who are in $y$ at time $t+1$. So $p^{(t+1)}$ should be the sum of $p^{(t)}(x) K(x, y)$ over all cities $x$.  \\ \\
+In 1.1, suppose a population of 1 million people is moving around all the states. $p^{(t+1)}(y)$ can be interpreted as the number of people in state $y$ at time $t+1$, and $p^{(t)}(x)$ can be interpreted as the number of people in state $x$ at time $t$. $K(x, y)$ 
+can be interpreted as, among all the people in state $x$ at time $t$, the fraction that will move to $y$ at time $t+1$. So $p^{(t)}(x) K(x, y)$ is the number of people who are at $x$ at time $t$ and who are at $y$ at time $t+1$. So $p^{(t+1)}(y)$ should be the sum of $p^{(t)}(x) K(x, y)$ over all states $x$.  \\ \\
 \noindent
 In 1.2, the distribution of the population at time $t$ is $p^{(t)}$. This distribution evolves over time and will eventually approach the stationary distribution. 
 \\ \\
 \noindent
-In 1.3, The transition matrix for time $s$, $K^{(s)}(x, y)$ can be  intrepreted as, among all the people in city $x$ at time $t$, the fraction of those who will end up in city $y$ at time $t+s$. 
+In 1.3, The transition matrix for time $s$, $K^{(s)}(x, y)$ can be  intrepreted as, among all the people in state $x$ at time $t$, the fraction that will end up in state $y$ at time $t+s$. 
 
 \section*{Problem 2}
 \begin{align}
@@ -57,10 +57,10 @@ Note that $\sum_x K(y,x)=1$. \\ \\
 \noindent
 Interpretation of $\sum_x \pi(x)K(x,y) = \pi(y)$: this is the property of stationary distribution. The distribution of the population does not change once it is at stationarity, meaning that the number of people in each state does not change, even though people are still moving around. 
 
-Intrpretation of $\pi(x) K(x, y)= \pi(y) K(y, x)$. This is detailed balance, meaning that for every pair of different states $x, y$, the number of people who go from $x$ to $y$ is the same as the number of people who go from $y$ to $x$. If this is true for every pair of states, then the number of people in each state does not change. 
+Intrpretation of $\pi(x) K(x, y)= \pi(y) K(y, x)$: this is detailed balance, meaning that for every pair of  states $x, y$, the number of people who go from $x$ to $y$ is the same as the number of people who go from $y$ to $x$. If this is true for every pair of states, then the number of people in each state does not change. 
 
 \section*{Problem 3.1}
-"Suppose the base chain is such that at each state, we move to one of the other two states with probability 1/2."
+``Suppose the base chain is such that at each state, we move to one of the other two states with probability 1/2.''
 <<>>=
 p = c(.4, .2, .4)
 B = matrix(c(0, 1/2, 1/2,
