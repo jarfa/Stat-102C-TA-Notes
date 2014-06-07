@@ -175,10 +175,8 @@ gibbsBivarNorm(0.9)$expec_val
 
 \section*{Problem 2-Bonus}
 We'll create a function that outputs a series of plots, interrupted by pauses. If we wrap this function in the saveGIF() function it should create an animated gif.
-
-The following code chunk isn't run in this file, but try it in your R console.
-
-<<prob2_bonus, eval=FALSE>>=
+%, fig.env='marginfigure'
+<<prob2_bonus>>= 
 library(animation)
 gibbsBivarNorm_walk = function(rho, M, x0=0, y0=0, Nsim=50, burnin=0, arrow=TRUE){
   xvals = yvals = matrix(nrow=Nsim+1, ncol=M)
@@ -201,20 +199,28 @@ gibbsBivarNorm_walk = function(rho, M, x0=0, y0=0, Nsim=50, burnin=0, arrow=TRUE
     ani.pause()
   }
 }
-
-par(mfrow = c(1,1), mar=c(5, 4, 2, 2) + 0.1)
+@
+Let's check out a few of these visualizations. Here we're using a low M, starting all of our chains at $(0,0)$, and using arrows to see how each point is moving.
+<<prob2bonus1, cache=TRUE, out.width='2in', out.height='2in', fig.align="center", fig.show="hold">>=
+par(mfrow = c(1,1), mar=c(4, 4, 2, 1))
 ani.options(interval = 0.1)
 #the next 2 lines will generate the "video" in your plotting window
-#small M. See how the individual points are moving around?
-gibbsBivarNorm_walk(rho=0.9, M=5)
-#big M. See how the distribution is coverging to the joint dist. of (x,y)?
-gibbsBivarNorm_walk(rho=0.9, M=500, arrow=FALSE, Nsim=25) 
-gibbsBivarNorm_walk(rho=0.95, M=500, arrow=FALSE, x0=-3, y0=-3, Nsim=25)
-#And the following line creates the .gif. 
+gibbsBivarNorm_walk(rho=0.9, M=5, Nsim=5)
+@
+Here's a much larger M. See how the distribution is coverging to the joint distribution $p(x,y)$?
+<<prob2bonus2, cache=TRUE, out.width='2in', out.height='2in', fig.align="center", fig.show="hold">>=
+gibbsBivarNorm_walk(rho=0.9, M=500, arrow=FALSE, Nsim=5) 
+@
+And finally, here are 500 Markove chains that are starting far from the center and with $\rho = 0.95$.
+<<prob2bonus3, cache=TRUE, out.width='2in', out.height='2in', fig.align="center", fig.show="hold">>=
+gibbsBivarNorm_walk(rho=0.95, M=500, arrow=FALSE, x0=-2, y0=-2, Nsim=9)
+@
+The following code chunk isn't being run, but will save GIFs of the sequences.
+<<eval=FALSE>>=
 #The file should pop up separately, make sure you save it somewhere useful.
-saveGIF(gibbsBivarNorm_walk(rho=0.9, M=5), movie.name = "smallM.gif")
-saveGIF(gibbsBivarNorm_walk(rho=0.9, M=500, arrow=FALSE), movie.name = "bigM.gif")
-saveGIF(gibbsBivarNorm_walk(rho=0.95, M=500, arrow=FALSE, x0=-3, y0=-3), movie.name='bigM2.gif')
+saveGIF(gibbsBivarNorm_walk(rho=0.9, M=5, Nsim=50), movie.name = "smallM.gif")
+saveGIF(gibbsBivarNorm_walk(rho=0.9, M=500, arrow=FALSE, Nsim=50), movie.name = "bigM.gif")
+saveGIF(gibbsBivarNorm_walk(rho=0.95, M=500, arrow=FALSE, x0=-3, y0=-3, Nsim=50), movie.name='bigM2.gif')
 @
 
 \end{document}
